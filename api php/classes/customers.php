@@ -151,6 +151,20 @@
             }
             return FALSE;
         }
+
+        public static function updateCredentials($credential_id, $passwdOld, $passwdNew) {
+            $helper = new Connection();
+            $queryPass = "SELECT * FROM credentials WHERE passwd='".$passwdOld."' AND credential_id=$credential_id";
+            $result = $helper->query($queryPass);
+            if ($result->num_rows)
+            {
+                $db = new Connection();
+                $query = "UPDATE credentials SET passwd='".$passwdNew."' WHERE credential_id=$credential_id";
+                $db->query($query);
+                return TRUE;
+            }
+            return FALSE;
+        }
         
 
     }

@@ -1,5 +1,5 @@
-/*CREATE SCHEMA db_storeRP;
-USE db_storeRP;*/
+CREATE SCHEMA db_storeRP;
+USE db_storeRP;
 CREATE TABLE `customers` (
   
   cust_id int(11) NOT NULL AUTO_INCREMENT,
