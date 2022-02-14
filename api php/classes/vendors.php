@@ -111,6 +111,16 @@
             return false;
         }
 
+        public static function deleteAddressVendor($address_id){
+            $db = new Connection();
+            $query = "DELETE FROM addresses_vendors WHERE address_id=$address_id";
+            $db->query($query);
+            if ($db->affected_rows >= 0) {
+                return TRUE;
+            }
+            return FALSE;
+        }
+
 
         public static function insertVendor($names, $paternal, $maternal, $email, $passwd){
             $db = new Connection();

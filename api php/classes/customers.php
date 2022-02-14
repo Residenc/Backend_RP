@@ -119,6 +119,16 @@
         }
 
 
+        public static function deleteAddressCustomer($address_id){
+            $db = new Connection();
+            $query = "DELETE FROM addresses_customers WHERE address_id=$address_id";
+            $db->query($query);
+            if ($db->affected_rows >= 0) {
+                return TRUE;
+            }
+            return FALSE;
+        }
+
         public static function insertCustomer($names, $paternal, $maternal, $email, $passwd){
             $db = new Connection();
             $queryInsert = "INSERT INTO customers (names, paternal, maternal, phone, gender, registration_date)
