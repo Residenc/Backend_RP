@@ -85,6 +85,16 @@ CREATE TABLE `products` (
   PRIMARY KEY (`product_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `files` (
+  file_id int(11) NOT NULL AUTO_INCREMENT,
+  product_id int(11),
+  name varchar(45),
+  path varchar(45),
+  description text,
+
+  PRIMARY KEY (`file_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `addresses_customers`
   ADD CONSTRAINT `FK_CustomerForAddress` FOREIGN KEY (`cust_id`) REFERENCES `customers` (`cust_id`) ON DELETE CASCADE;
 ALTER TABLE `addresses_vendors`
@@ -97,6 +107,8 @@ ALTER TABLE `credentials`
 ALTER TABLE `products`
   ADD CONSTRAINT `FK_BusinessForProduct` FOREIGN KEY (`business_id`) REFERENCES `business` (`business_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_VendorForProduct` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
+ALTER TABLE `files`
+  ADD CONSTRAINT `FK_ProductForFile` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
 
 
 
