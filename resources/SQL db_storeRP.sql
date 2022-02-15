@@ -45,7 +45,7 @@ CREATE TABLE `addresses_customers` (
   address_id int(11) NOT NULL AUTO_INCREMENT,
   cust_id int(11),
   address text,
-  default_address ENUM('FALSE', 'TRUE') NOT NULL DEFAULT 'FALSE',
+  default_address boolean NOT NULL DEFAULT 0,
   PRIMARY KEY (`address_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4;
@@ -54,7 +54,7 @@ CREATE TABLE `addresses_vendors` (
   address_id int(11) NOT NULL AUTO_INCREMENT,
   vendor_id int(11),
   address text,
-  default_address ENUM('FALSE', 'TRUE') NOT NULL DEFAULT 'FALSE',
+  default_address boolean NOT NULL DEFAULT 0,
   PRIMARY KEY (`address_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4;

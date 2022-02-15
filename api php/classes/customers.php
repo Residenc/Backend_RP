@@ -40,7 +40,7 @@
 
         public static function getCustomerDefaultAddress($cust_id){
             $db = new Connection();
-            $query = "SELECT * FROM addresses_customers WHERE cust_id=$cust_id AND default_address = 'TRUE'";
+            $query = "SELECT * FROM addresses_customers WHERE cust_id=$cust_id AND default_address = 1";
             $result_cust = $db->query($query);
             $data = [];
             if ($result_cust->num_rows) {
@@ -106,11 +106,11 @@
 
         public static function updateAddressCustomer($cust_id, $address_id, $address, $default_address){
             $db = new Connection();
-            $query = "UPDATE addresses_customers SET  address = '".$address."', default_address = '".$default_address."' WHERE address_id=$address_id AND cust_id=$cust_id";
+            $query = "UPDATE addresses_customers SET  address = '".$address."', default_address = $default_address WHERE address_id=$address_id AND cust_id=$cust_id";
             $db->query($query);
             if($db->affected_rows) {
-                if($default_address === 'TRUE'){
-                    $query2 = "UPDATE addresses_customers SET default_address = 'FALSE' WHERE cust_id=$cust_id AND default_address='TRUE' AND address_id NOT LIKE $address_id";
+                if($default_address === true){
+                    $query2 = "UPDATE addresses_customers SET default_address = 0 WHERE cust_id=$cust_id AND default_address=1 AND address_id NOT LIKE $address_id";
                     $db->query($query2);
                 }
                 return true;
