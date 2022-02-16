@@ -95,6 +95,29 @@ CREATE TABLE `files` (
   PRIMARY KEY (`file_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `cartitemscustomers` (
+  cartitem_id int(11) NOT NULL AUTO_INCREMENT,
+  cust_id int(11),
+  product_id int(11),
+  quantity int(11),
+
+
+  PRIMARY KEY (`cartitem_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `cartitemsvendors` (
+  cartitem_id int(11) NOT NULL AUTO_INCREMENT,
+  vendor_id int(11),
+  product_id int(11),
+  quantity int(11),
+
+
+  PRIMARY KEY (`cartitem_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+
+
+
 ALTER TABLE `addresses_customers`
   ADD CONSTRAINT `FK_CustomerForAddress` FOREIGN KEY (`cust_id`) REFERENCES `customers` (`cust_id`) ON DELETE CASCADE;
 ALTER TABLE `addresses_vendors`
@@ -109,7 +132,7 @@ ALTER TABLE `products`
   ADD CONSTRAINT `FK_VendorForProduct` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
 ALTER TABLE `files`
   ADD CONSTRAINT `FK_ProductForFile` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
-
+ALTER TABLE `cartitems` ADD CONSTRAINT `FK_VendorForCartItem` FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`vendor_id`) ON DELETE CASCADE ON UPDATE RESTRICT; ALTER TABLE `cartitems` ADD CONSTRAINT `FK_CustomerForCartItem` FOREIGN KEY (`cust_id`) REFERENCES `customers`(`cust_id`) ON DELETE CASCADE ON UPDATE RESTRICT; ALTER TABLE `cartitems` ADD CONSTRAINT `FK_ProductForCartItem` FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 
 
