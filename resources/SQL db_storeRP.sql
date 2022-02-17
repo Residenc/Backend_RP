@@ -118,24 +118,6 @@ CREATE TABLE `cartitemsvendors` (
 
 
 
-ALTER TABLE `addresses_customers`
-  ADD CONSTRAINT `FK_CustomerForAddress` FOREIGN KEY (`cust_id`) REFERENCES `customers` (`cust_id`) ON DELETE CASCADE;
-ALTER TABLE `addresses_vendors`
-  ADD CONSTRAINT `FK_VendorForAddress` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
-ALTER TABLE `business`
-  ADD CONSTRAINT `FK_VendorForBusiness` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
-ALTER TABLE `credentials`
-  ADD CONSTRAINT `FK_CustomerForCredentials` FOREIGN KEY (`cust_id`) REFERENCES `customers` (`cust_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_VendorForCredentials` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
-ALTER TABLE `products`
-  ADD CONSTRAINT `FK_BusinessForProduct` FOREIGN KEY (`business_id`) REFERENCES `business` (`business_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_VendorForProduct` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`) ON DELETE CASCADE;
-ALTER TABLE `files`
-  ADD CONSTRAINT `FK_ProductForFile` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
-ALTER TABLE `cartitems` ADD CONSTRAINT `FK_VendorForCartItem` FOREIGN KEY (`vendor_id`) REFERENCES `vendors`(`vendor_id`) ON DELETE CASCADE ON UPDATE RESTRICT; ALTER TABLE `cartitems` ADD CONSTRAINT `FK_CustomerForCartItem` FOREIGN KEY (`cust_id`) REFERENCES `customers`(`cust_id`) ON DELETE CASCADE ON UPDATE RESTRICT; ALTER TABLE `cartitems` ADD CONSTRAINT `FK_ProductForCartItem` FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
-
-
-
 DROP TRIGGER IF EXISTS `InsertCustomerID_onCredentials`;
 DELIMITER $$
 CREATE TRIGGER `InsertCustomerID_onCredentials` AFTER INSERT ON `customers` FOR EACH ROW BEGIN
