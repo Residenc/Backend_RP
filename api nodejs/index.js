@@ -37,7 +37,7 @@ app.get('/', (req, res) =>{
 });
 
  // Ruta para guardar imagenes
- app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+ app.use('/uploads', express.static(path.join('../uploads')));
  const storage = multer.diskStorage({
      destination: (req, file, callBack) => {
          callBack(null, 'uploads')
@@ -91,4 +91,18 @@ app.post('/file', upload.array('files'), (req, res, next) => {
 
     })
 
+});
+
+app.get('/productoimagen',(req , res) =>{
+    const sql = 'select * from products order by product_id desc  limit 1;';
+ 
+    conexion.query(sql,(error, results) => {
+        if (error) throw error;
+        console.log(error);
+        if (results.length > 0){
+            res.json(results)
+        }else{
+            res.send('No hay resultados')
+        } 
+    })
 });
