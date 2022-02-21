@@ -17,10 +17,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
  
 var conexion = mysql.createConnection({
-    host: "bqxxg5gdpjpsoxtwpx3b-mysql.services.clever-cloud.com",
-    user: "ux9jmxckmj5buvro",
-    password: "IjNijqvWvaYQ7CLkFjJr",
-    database: "bqxxg5gdpjpsoxtwpx3b",
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "db_storerp",
     multipleStatements: true
 });
 
