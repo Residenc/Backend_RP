@@ -52,7 +52,7 @@ app.get('/', (req, res) =>{
 
  
  app.get("/upload", (req, res) => {
-    conexion.query('SELECT products.product_name,files.file_id,files.name, files.path as imagen FROM products INNER JOIN files ON products.product_id = files.id_producto where products.product_id = 98 and files.produc_id = 98;', (err, rows, fields) => {
+    conexion.query('SELECT products.product_name,files.file_id,files.name, files.path as imagen FROM products INNER JOIN files ON products.product_id = files.id_producto where products.product_id = 1 and files.produc_id = 1;', (err, rows, fields) => {
         if (!err) {
             res.json(rows);
         } else {
