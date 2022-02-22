@@ -18,10 +18,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
  
 var conexion = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "db_storerp",
+    host: "162.241.62.187",
+    user: "storerpp_admin",
+    password: "91HXzMLZE7rF",
+    database: "storerpp_db",
     multipleStatements: true
 });
 

@@ -85,6 +85,21 @@ CREATE TABLE `products` (
   PRIMARY KEY (`product_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `services` (
+  service_id int(11) NOT NULL AUTO_INCREMENT,
+  vendor_id int(11),
+  business_id int(11),
+  service_name varchar(45),
+  description text,
+  minprice int(11),
+  maxprice int(11),
+  category varchar(45),
+  image blob,
+  registration_date date NOT NULL,
+
+  PRIMARY KEY (`service_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `files` (
   file_id int(11) NOT NULL AUTO_INCREMENT,
   product_id int(11),
@@ -113,6 +128,31 @@ CREATE TABLE `cartitemsvendors` (
 
 
   PRIMARY KEY (`cartitem_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `ticketscustomers` (
+  ticket_id int(11) NOT NULL AUTO_INCREMENT,
+  cust_id int(11),
+  service_id int(11),
+  name varchar(100),
+  phone varchar(20),
+  email varchar(20),
+  comment text,
+
+  PRIMARY KEY (`ticket_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `ticketsvendors` (
+  ticket_id int(11) NOT NULL AUTO_INCREMENT,
+  vendor_id int(11),
+  service_id int(11),
+  name varchar(100),
+  phone varchar(20),
+  email varchar(20),
+  comment text,
+
+
+  PRIMARY KEY (`ticket_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
 
