@@ -26,7 +26,8 @@
 
         public static function getAllServics(){
             $db = new Connection();
-            $query = "SELECT * FROM services";
+            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+                      FROM services INNER JOIN business on services.business_id = business.business_id ";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -34,6 +35,7 @@
                     $data[]=[
                         'service_id' => $row['service_id'],
                         'business_id' => $row['business_id'],
+                        'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
                         'description' => $row['description'],
                         'minprice' => $row['minprice'],
@@ -51,7 +53,8 @@
 
         public static function getAllServicsOfVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT * FROM services WHERE vendor_id='".$vendor_id."'";
+            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.vendor_id='".$vendor_id."'";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -59,6 +62,7 @@
                     $data[]=[
                         'service_id' => $row['service_id'],
                         'business_id' => $row['business_id'],
+                        'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
                         'description' => $row['description'],
                         'minprice' => $row['minprice'],
@@ -76,7 +80,8 @@
 
         public static function getServics($service_id){
             $db = new Connection();
-            $query = "SELECT * FROM services WHERE service_id='".$service_id."'";
+            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.service_id='".$service_id."'";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -84,6 +89,7 @@
                     $data[]=[
                         'service_id' => $row['service_id'],
                         'business_id' => $row['business_id'],
+                        'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
                         'description' => $row['description'],
                         'minprice' => $row['minprice'],
