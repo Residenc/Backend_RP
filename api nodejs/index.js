@@ -118,6 +118,7 @@ app.get('/listaimagen/:product_id',(req , res) =>{
         console.log(error);
         if (rows.length > 0){
             res.json(rows)
+            
         }else{
             res.send('No hay resultados')
         } 
@@ -139,3 +140,23 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
         } 
     })
 });
+
+
+
+
+app.get('/listavendor/:vendor_id/:product_id',(req , res) =>{
+    const {vendor_id,product_id} = req.params;
+    const sql = `SELECT f.file_id,f.path, p.product_id from files as f INNER JOIN products as p where p.product_id = ${product_id} and p.vendor_id = ${vendor_id} group by p.product_id; `
+    pool.query(sql,(error, results) => {
+        if (error) throw error;
+        console.log(error);
+        if (results.length > 0){
+            res.json(results)
+        }else{
+            res.send('No hay resultados')
+        } 
+    })
+});
+
+//gabo@mail.com
+//123456789

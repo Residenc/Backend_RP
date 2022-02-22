@@ -56,7 +56,9 @@
         public static function getAllProductsOfVendor($vendor_id){
             $db = new Connection();
             $query = " SELECT products.product_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
-                       FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.vendor_id='".$vendor_id."'";
+                      FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.vendor_id='".$vendor_id."'";
+           // "SELECT products.product_id, products.brand, products.category, products.description, products.image, files.path,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id, business.name FROM products INNER JOIN business on products.business_id = business.business_id 
+            //INNER JOIN files on files.product_id = products.product_id WHERE products.vendor_id='".$vendor_id."' group by products.product_id;"
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -72,6 +74,7 @@
                         'quantity' => $row['quantity'],
                         'category' => $row['category'],
                         'image' => $row['image'],
+                        //'path' => $row['path'],
                         'registration_date' => $row['registration_date'],
                     ];
                 }
