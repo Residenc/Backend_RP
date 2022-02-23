@@ -107,7 +107,7 @@
 
         public static function updateServics($service_id, $service_name, $description, $minprice, $maxprice, $category) {
             $db = new Connection();
-            $query = "UPDATE services SET service_name='".$service_name."', description='".$description."', minprice='".$minprice."', maxprice='".$maxprice."', category='".$category."', WHERE service_id=$service_id";
+            $query = "UPDATE services SET service_name='".$service_name."', description='".$description."', minprice='".$minprice."', maxprice='".$maxprice."', category='".$category."' WHERE service_id=$service_id";
             $db->query($query);
             if ($db->affected_rows)
             {

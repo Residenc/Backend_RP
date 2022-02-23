@@ -120,7 +120,7 @@
 
         public static function updateProduct($product_id, $product_name, $description, $price, $brand, $quantity, $category) {
             $db = new Connection();
-            $query = "UPDATE products SET product_name='".$product_name."', description='".$description."', price='".$price."', brand='".$brand."', quantity='".$quantity."', category='".$category."', WHERE product_id=$product_id";
+            $query = "UPDATE products SET product_name='".$product_name."', description='".$description."', price='".$price."', brand='".$brand."', quantity='".$quantity."', category='".$category."' WHERE product_id=$product_id";
             $db->query($query);
             if ($db->affected_rows)
             {
