@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
   }));
 app.use(bodyParser.json());
  
-var conexion = mysql.createConnection({
+var pool = mysql.createPool({
     host: "162.241.62.187",
     user: "storerpp_admin",
     password: "91HXzMLZE7rF",
@@ -25,10 +25,10 @@ var conexion = mysql.createConnection({
     multipleStatements: true
 });
 
-conexion.connect(error =>{
-    if(error) throw error;
-    console.log('Conexion exitosa') 
-});
+//mysql.connect(error =>{
+  //  if(error) throw error;
+   // console.log('Conexion exitosa') 
+//});
 
 
 app.listen(PORT,()=> console.log(`Server runing on port ${PORT}`))
@@ -53,7 +53,7 @@ app.get('/', (req, res) =>{
 
  
  app.get("/upload", (req, res) => {
-    conexion.query('SELECT * FROM files;', (err, rows, fields) => {
+    pool.query('SELECT * FROM files;', (err, rows, fields) => {
         if (!err) {
             res.json(rows);
         } else {
@@ -74,7 +74,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
     
         const sql = 'select product_id from products order by product_id desc limit 1;';
      
-        conexion.query(sql,(error, results) => {
+        pool.query(sql,(error, results) => {
             if (error) throw error;
             console.log(error);
             if (results.length > 0){
@@ -84,7 +84,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
                     const file = files[clave];
                     const nombreArchivo = /*uuidv4().concat*/(file.filename);
                     const direccion = file.path;
-                    conexion.query('INSERT INTO files (name,path,product_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
+                    pool.query('INSERT INTO files (name,path,product_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
                   }
             }else{
                 res.send('No hay resultados')
@@ -98,7 +98,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
     const {product_id} = req.params;
     const sql = `select * from files where product_id = ${product_id} order by product_id desc  limit 1;`
  
-    conexion.query(sql,(error, results) => {
+    pool.query(sql,(error, results) => {
         if (error) throw error;
         console.log(error);
         if (results.length > 0){
@@ -113,11 +113,12 @@ app.get('/listaimagen/:product_id',(req , res) =>{
     const {product_id} = req.params;
     const sql = `select * from files where product_id = ${product_id} order by product_id desc limit 1;`
  
-    conexion.query(sql,(error, rows) => {
+    pool.query(sql,(error, rows) => {
         if (error) throw error;
         console.log(error);
         if (rows.length > 0){
             res.json(rows)
+            
         }else{
             res.send('No hay resultados')
         } 
@@ -129,7 +130,7 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
     const {vendor_id} = req.params;
     const sql = `select * from products where vendor_id = ${vendor_id} order by product_id desc  limit 1;`
  
-    conexion.query(sql,(error, results) => {
+    pool.query(sql,(error, results) => {
         if (error) throw error;
         console.log(error);
         if (results.length > 0){
@@ -139,3 +140,23 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
         } 
     })
 });
+
+
+
+
+app.get('/listavendor/:vendor_id/:product_id',(req , res) =>{
+    const {vendor_id,product_id} = req.params;
+    const sql = `SELECT f.file_id,f.path, p.product_id from files as f INNER JOIN products as p where p.product_id = ${product_id} and p.vendor_id = ${vendor_id} group by p.product_id; `
+    pool.query(sql,(error, results) => {
+        if (error) throw error;
+        console.log(error);
+        if (results.length > 0){
+            res.json(results)
+        }else{
+            res.send('No hay resultados')
+        } 
+    })
+});
+
+//gabo@mail.com
+//123456789
