@@ -27,7 +27,7 @@
         public static function getAllProducts(){
             $db = new Connection();
 
-            $query = " SELECT products.product_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
+            $query = " SELECT products.product_id, products.vendor_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
                        FROM products INNER JOIN business on products.business_id = business.business_id";
             $result = $db->query($query);
             $data = [];
@@ -35,6 +35,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'product_id' => $row['product_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'],
                         'business_name' => $row['name'],
                         'product_name' => $row['product_name'],
@@ -55,7 +56,7 @@
 
         public static function getAllProductsOfVendor($vendor_id){
             $db = new Connection();
-            $query = " SELECT products.product_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
+            $query = " SELECT products.product_id, products.vendor_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
                        FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.vendor_id='".$vendor_id."'";
             $result = $db->query($query);
             $data = [];
@@ -63,6 +64,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'product_id' => $row['product_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'],
                         'business_name' => $row['name'],
                         'product_name' => $row['product_name'],
@@ -83,7 +85,7 @@
 
         public static function getProduct($product_id){
             $db = new Connection();
-            $query = "SELECT products.product_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
+            $query = "SELECT products.product_id, products.vendor_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
                       FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.product_id='".$product_id."'";
             $result = $db->query($query);
             $data = [];
@@ -91,6 +93,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'product_id' => $row['product_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'], 
                         'business_name' => $row['name'],
                         'product_name' => $row['product_name'],

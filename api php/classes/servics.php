@@ -26,7 +26,7 @@
 
         public static function getAllServics(){
             $db = new Connection();
-            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
                       FROM services INNER JOIN business on services.business_id = business.business_id ";
             $result = $db->query($query);
             $data = [];
@@ -34,6 +34,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'service_id' => $row['service_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'],
                         'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
@@ -53,7 +54,7 @@
 
         public static function getAllServicsOfVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
             FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.vendor_id='".$vendor_id."'";
             $result = $db->query($query);
             $data = [];
@@ -61,6 +62,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'service_id' => $row['service_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'],
                         'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
@@ -80,7 +82,7 @@
 
         public static function getServics($service_id){
             $db = new Connection();
-            $query = "SELECT services.service_id,  services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
             FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.service_id='".$service_id."'";
             $result = $db->query($query);
             $data = [];
@@ -88,6 +90,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $data[]=[
                         'service_id' => $row['service_id'],
+                        'vendor_id' => $row['vendor_id'],
                         'business_id' => $row['business_id'],
                         'business_name' => $row['name'],
                         'service_name' => $row['service_name'],
