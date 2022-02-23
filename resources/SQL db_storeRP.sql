@@ -37,7 +37,6 @@ CREATE TABLE `business` (
   about text,
   phone varchar(20),
   email varchar(45),
-  image blob,
   PRIMARY KEY (`business_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `addresses_customers` (
@@ -79,7 +78,6 @@ CREATE TABLE `products` (
   brand varchar(45),
   quantity int(11),
   category varchar(45),
-  image blob,
   registration_date date NOT NULL,
 
   PRIMARY KEY (`product_id`)
@@ -94,13 +92,12 @@ CREATE TABLE `services` (
   minprice int(11),
   maxprice int(11),
   category varchar(45),
-  image blob,
   registration_date date NOT NULL,
 
   PRIMARY KEY (`service_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-CREATE TABLE `files` (
+CREATE TABLE `filesproducts` (
   file_id int(11) NOT NULL AUTO_INCREMENT,
   product_id int(11),
   name varchar(45),
@@ -108,6 +105,26 @@ CREATE TABLE `files` (
   description text,
 
   PRIMARY KEY (`file_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `filesservices` (
+  fileservice_id int(11) NOT NULL AUTO_INCREMENT,
+  service_id int(11),
+  name varchar(45),
+  path varchar(45),
+  description text,
+
+  PRIMARY KEY (`fileservice_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `filesbusiness` (
+  filebusiness_id int(11) NOT NULL AUTO_INCREMENT,
+  business_id int(11),
+  name varchar(45),
+  path varchar(45),
+  description text,
+
+  PRIMARY KEY (`filebusiness_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `cartitemscustomers` (

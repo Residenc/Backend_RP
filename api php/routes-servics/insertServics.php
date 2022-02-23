@@ -7,7 +7,7 @@
 
     $data = json_decode(file_get_contents('php://input'));
         if($data != NULL){
-            if(Servics::insertServics($data->vendor_id, $data->service_name, $data->description, $data->minprice, $data->maxprice, $data->category, $data->image)){
+            if(Servics::insertServics($data->vendor_id, $data->service_name, $data->description, $data->minprice, $data->maxprice, $data->category)){
                 echo json_encode(['insert' => TRUE]);
             }
             else{

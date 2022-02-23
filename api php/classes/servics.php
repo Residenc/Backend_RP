@@ -6,7 +6,7 @@
     class Servics{
 
         
-        public static function insertServics($vendor_id, $service_name, $description, $minprice, $maxprice, $category, $image){
+        public static function insertServics($vendor_id, $service_name, $description, $minprice, $maxprice, $category){
             $db = new Connection();
 
             $result = mysqli_query($db, "SELECT business_id FROM business WHERE vendor_id=$vendor_id");
@@ -14,8 +14,8 @@
             $id_business = $row[0];
 
 
-            $query = "INSERT INTO services (vendor_id, business_id, service_name, description, minprice, maxprice, category, image, registration_date)
-            VALUES('".$vendor_id."', '".$id_business."', '".$service_name."', '".$description."', '".$minprice."', '".$maxprice."', '".$category."', '".$image."', CURDATE())";
+            $query = "INSERT INTO services (vendor_id, business_id, service_name, description, minprice, maxprice, category, registration_date)
+            VALUES('".$vendor_id."', '".$id_business."', '".$service_name."', '".$description."', '".$minprice."', '".$maxprice."', '".$category."', CURDATE())";
             $db->query($query);
             if ($db->affected_rows) {
                 return TRUE;
@@ -26,7 +26,7 @@
 
         public static function getAllServics(){
             $db = new Connection();
-            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
                       FROM services INNER JOIN business on services.business_id = business.business_id ";
             $result = $db->query($query);
             $data = [];
@@ -42,7 +42,6 @@
                         'minprice' => $row['minprice'],
                         'maxprice' => $row['maxprice'],
                         'category' => $row['category'],
-                        'image' => $row['image'],
                         'registration_date' => $row['registration_date'],
                     ];
                 }
@@ -54,7 +53,7 @@
 
         public static function getAllServicsOfVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
             FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.vendor_id='".$vendor_id."'";
             $result = $db->query($query);
             $data = [];
@@ -70,7 +69,6 @@
                         'minprice' => $row['minprice'],
                         'maxprice' => $row['maxprice'],
                         'category' => $row['category'],
-                        'image' => $row['image'],
                         'registration_date' => $row['registration_date'],
                     ];
                 }
@@ -82,7 +80,7 @@
 
         public static function getServics($service_id){
             $db = new Connection();
-            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.image, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
             FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.service_id='".$service_id."'";
             $result = $db->query($query);
             $data = [];
@@ -98,7 +96,6 @@
                         'minprice' => $row['minprice'],
                         'maxprice' => $row['maxprice'],
                         'category' => $row['category'],
-                        'image' => $row['image'],
                         'registration_date' => $row['registration_date'],
                     ];
                 }
@@ -108,9 +105,9 @@
         }
 
 
-        public static function updateServics($service_id, $service_name, $description, $minprice, $maxprice, $category, $image) {
+        public static function updateServics($service_id, $service_name, $description, $minprice, $maxprice, $category) {
             $db = new Connection();
-            $query = "UPDATE services SET service_name='".$service_name."', description='".$description."', minprice='".$minprice."', maxprice='".$maxprice."', category='".$category."', image='".$image."' WHERE service_id=$service_id";
+            $query = "UPDATE services SET service_name='".$service_name."', description='".$description."', minprice='".$minprice."', maxprice='".$maxprice."', category='".$category."', WHERE service_id=$service_id";
             $db->query($query);
             if ($db->affected_rows)
             {

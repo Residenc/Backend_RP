@@ -84,7 +84,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
                     const file = files[clave];
                     const nombreArchivo = /*uuidv4().concat*/(file.filename);
                     const direccion = file.path;
-                    pool.query('INSERT INTO files (name,path,product_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
+                    pool.query('INSERT INTO filesproducts (name,path,product_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
                   }
             }else{
                 res.send('No hay resultados')
@@ -111,7 +111,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
 
 app.get('/listaimagen/:product_id',(req , res) =>{
     const {product_id} = req.params;
-    const sql = `select * from files where product_id = ${product_id} order by product_id desc limit 1;`
+    const sql = `select * from filesproducts where product_id = ${product_id} order by product_id desc limit 1;`
  
     pool.query(sql,(error, rows) => {
         if (error) throw error;
@@ -146,7 +146,7 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
 
 app.get('/listavendor/:vendor_id/:product_id',(req , res) =>{
     const {vendor_id,product_id} = req.params;
-    const sql = `SELECT f.file_id,f.path, p.product_id from files as f INNER JOIN products as p where p.product_id = ${product_id} and p.vendor_id = ${vendor_id} group by p.product_id; `
+    const sql = `SELECT f.file_id,f.path, p.product_id from filesproducts as f INNER JOIN products as p where p.product_id = ${product_id} and p.vendor_id = ${vendor_id} group by p.product_id; `
     pool.query(sql,(error, results) => {
         if (error) throw error;
         console.log(error);
