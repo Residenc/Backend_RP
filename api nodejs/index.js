@@ -94,6 +94,38 @@ app.post('/file', upload.array('files'), (req, res, next) => {
 
 });
 
+//Imagenes de servicios
+app.post('/fileservices', upload.array('files'), (req, res, next) => {
+    const files = req.files;
+    
+    if (!files) {
+        const error = new Error('No File')
+        error.httpStatusCode = 400;
+        return next(error)
+    }
+    
+        const sql = 'select service_id from services order by service_id desc limit 1;';
+     
+        pool.query(sql,(error, results) => {
+            if (error) throw error;
+            console.log(error);
+            if (results.length > 0){
+                res.json(results)
+                const data = results[0].service_id;
+                for (let clave in files) {
+                    const file = files[clave];
+                    const nombreArchivo = /*uuidv4().concat*/(file.filename);
+                    const direccion = file.path;
+                    pool.query('INSERT INTO filesservices (name,path,service_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
+                  }
+            }else{
+                res.send('No hay resultados')
+            } 
+
+    })
+
+});
+
 /*app.get('/productoimagen/:product_id',(req , res) =>{
     const {product_id} = req.params;
     const sql = `select * from files where product_id = ${product_id} order by product_id desc  limit 1;`
@@ -111,7 +143,7 @@ app.post('/file', upload.array('files'), (req, res, next) => {
 
 app.get('/listaimagen/:product_id',(req , res) =>{
     const {product_id} = req.params;
-    const sql = `select * from filesproducts where product_id = ${product_id} order by product_id desc limit 1;`
+    const sql = `select * from filesproducts where product_id = ${product_id} ;`
  
     pool.query(sql,(error, rows) => {
         if (error) throw error;
@@ -142,11 +174,11 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
 });
 
 
-
-
-app.get('/listavendor/:vendor_id/:product_id',(req , res) =>{
-    const {vendor_id,product_id} = req.params;
-    const sql = `SELECT f.file_id,f.path, p.product_id from filesproducts as f INNER JOIN products as p where p.product_id = ${product_id} and p.vendor_id = ${vendor_id} group by p.product_id; `
+//Obtiene ultimo registro de servicio
+app.get('/servicioimagen/:vendor_id',(req , res) =>{
+    const {vendor_id} = req.params;
+    const sql = `select * from services where vendor_id = ${vendor_id} order by service_id desc  limit 1;`
+ 
     pool.query(sql,(error, results) => {
         if (error) throw error;
         console.log(error);
@@ -157,6 +189,8 @@ app.get('/listavendor/:vendor_id/:product_id',(req , res) =>{
         } 
     })
 });
+
+
 
 //gabo@mail.com
 //123456789
