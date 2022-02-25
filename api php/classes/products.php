@@ -90,7 +90,7 @@
         public static function getProduct($product_id){
             $db = new Connection();
             //$query = "SELECT products.product_id, products.vendor_id, products.brand, products.category, products.description, products.image,  products.price, products.product_name,  products.quantity, products.registration_date, products.business_id,  business.name
-                      //FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.product_id='".$product_id."'";
+            //FROM products INNER JOIN business on products.business_id = business.business_id WHERE products.product_id='".$product_id."'";
             $query = "SELECT products.product_id, products.vendor_id, products.brand, products.category, products.description, filesproducts.path, products.price, products.product_name,  products.quantity, products.registration_date, products.business_id, business.name FROM products INNER JOIN business on products.business_id = business.business_id 
             INNER JOIN filesproducts on filesproducts.product_id = products.product_id WHERE products.product_id='".$product_id."' GROUP BY products.product_id;";
             $result = $db->query($query);
