@@ -17,7 +17,7 @@
             $q=("SELECT * FROM cartitemscustomers WHERE product_id=$product_id AND cust_id=$cust_id");
             $result = $db->query($q);
             if ($result->num_rows){
-                $updateQuantity = "UPDATE cartitemscustomers SET quantity=quantity+'".$quantity."' WHERE product_id=$product_id AND vendor_id=$cust_id";
+                $updateQuantity = "UPDATE cartitemscustomers SET quantity=quantity+'".$quantity."' WHERE product_id=$product_id AND cust_id=$cust_id";
                 $db->query($updateQuantity);
                 if ($db->affected_rows)
                 {
@@ -37,7 +37,7 @@
 
         public static function getCartItemsCustomer($cust_id){
             $db = new Connection();
-            $query = "SELECT cartitemscustomers.cartitem_id, cartitemscustomers.cust_id, cartitemscustomers.quantity,cartitemscustomers.product_id,products.product_name, products.price FROM `cartitemscustomers` inner join products on cartitemscustomers.product_id = products.product_id where cartitemscustomers.cust_id = $cust_id";
+            $query = "SELECT cartitemscustomers.cartitem_id, cartitemscustomers.cust_id, cartitemscustomers.quantity, cartitemscustomers.product_id, products.product_name, products.quantity AS stock, products.price FROM `cartitemscustomers` inner join products on cartitemscustomers.product_id = products.product_id where cartitemscustomers.cust_id = $cust_id";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) {
@@ -48,6 +48,7 @@
                         'cust_id' => $row['cust_id'],
                         'product_name' => $row['product_name'],
                         'price' => $row['price'],
+                        'stock' => $row['stock'],
                         'quantity' => $row['quantity'],
                         'total' => $row['price']*$row['quantity']
                     ];

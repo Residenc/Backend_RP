@@ -34,7 +34,7 @@
 
         public static function getCartItemsVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT cartitemsvendors.cartitem_id,  cartitemsvendors.vendor_id, cartitemsvendors.quantity,cartitemsvendors.product_id,products.product_name, products.price FROM `cartitemsvendors` inner join products on cartitemsvendors.product_id = products.product_id where cartitemsvendors.vendor_id = $vendor_id";
+            $query = "SELECT cartitemsvendors.cartitem_id,  cartitemsvendors.vendor_id, cartitemsvendors.quantity,cartitemsvendors.product_id,products.product_name, products.quantity AS stock, products.price FROM `cartitemsvendors` inner join products on cartitemsvendors.product_id = products.product_id where cartitemsvendors.vendor_id = $vendor_id";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) {
@@ -45,6 +45,7 @@
                         'vendor_id' => $row['vendor_id'],
                         'product_name' => $row['product_name'],
                         'price' => $row['price'],
+                        'stock' => $row['stock'],
                         'quantity' => $row['quantity'],
                         'total' => $row['price']*$row['quantity']
                     ];
