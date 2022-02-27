@@ -65,6 +65,18 @@
             return FALSE;
         }
 
+        public static function updateCartItemVendor($cartitem_id, $vendor_id, $quantity){
+            $db = new Connection();
+            $query = "UPDATE `cartitemsvendors` SET quantity='".$quantity."'WHERE cartitem_id=$cartitem_id AND vendor_id=$vendor_id";
+            $db->query($query);
+            if ($db->affected_rows)
+            {
+
+                return TRUE;
+            }
+            return FALSE;
+        }
+
 
     }
 
