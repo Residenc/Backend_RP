@@ -181,4 +181,71 @@ app.get('/servicioimagen/:vendor_id',(req , res) =>{
     })
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
+ // Ruta para guardar imagenes
+ app.use('/uploadbusiness', express.static(path.join(__dirname,'uploadbusiness')));
+ const storagebus = multer.diskStorage({
+     destination: (req, file, callBack) => {
+         callBack(null, 'uploadbusiness')
+     },
+     filename: (req, file, callBack) => {
+
+         callBack(null, uuidv4().concat(file.originalname))
+     }
+ });
+
+         const uploadbus = multer({ storage: storagebus })
+
+app.post('/filebus', uploadbus.array('files'), (req, res, next) => {
+    const files = req.files;
+    console.log(files)
+
+    if (!files) {
+        const error = new Error('No File')
+        error.httpStatusCode = 400;
+        return next(error)
+    }
+    
+        const sql = 'select business_id from business order by business_id desc limit 1;';
+     
+        pool.query(sql,(error, results) => {
+            if (error) throw error;
+            console.log(results);
+            if (results.length > 0){
+                res.json(results)
+                const data = results[0].business_id;
+                for (let clave in files) {
+                    const file = files[clave];
+                    const nombreArchivo = /*uuidv4().concat*/(file.filename);
+                    const direccion = file.path;
+                    pool.query('INSERT INTO filesbusiness (name,path,business_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
+                  }
+            }else{
+                res.send('No hay resultados')
+            } 
+
+    })
+
+});
+
+
+app.get('/businessimagen/:business_id',(req , res) =>{
+    const {business_id} = req.params;
+    const sql = `select * from business where business_id = ${business_id} order by business_id desc limit 1;`
+ 
+    pool.query(sql,(error, results) => {
+        if (error) throw error;
+        console.log(error);
+        if (results.length > 0){
+            res.json(results)
+        }else{
+            res.send('No hay resultados')
+        } 
+    })
+});
+
+
+
+
 
