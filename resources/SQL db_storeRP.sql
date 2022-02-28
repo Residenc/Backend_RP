@@ -131,7 +131,10 @@ CREATE TABLE `cartitemscustomers` (
   cartitem_id int(11) NOT NULL AUTO_INCREMENT,
   cust_id int(11),
   product_id int(11),
+  seller_id int(11),
   quantity int(11),
+  ordercart VARCHAR(20),
+  order_id int(11)
 
 
   PRIMARY KEY (`cartitem_id`)
@@ -141,12 +144,47 @@ CREATE TABLE `cartitemsvendors` (
   cartitem_id int(11) NOT NULL AUTO_INCREMENT,
   vendor_id int(11),
   product_id int(11),
+  seller_id int(11),
   quantity int(11),
+  ordercart VARCHAR(20),
+  order_id int(11)
 
 
   PRIMARY KEY (`cartitem_id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `orderscustomers` (
+  order_id int(11) NOT NULL AUTO_INCREMENT,
+  payorder VARCHAR(50),
+  cust_id INT(11),
+  name VARCHAR(100),
+  address text,
+  email VARCHAR(45),
+  phone1 VARCHAR(20),
+  phone2 VARCHAR(20),
+  total int(11),
+  status VARCHAR(45),
+  registration_date date NOT NULL, 
+
+  PRIMARY KEY (`order_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `ordersvendors` (
+  order_id int(11) NOT NULL AUTO_INCREMENT,
+  payorder VARCHAR(50),
+  vendor_id int(11),
+  name VARCHAR(100),
+  address text,
+  email VARCHAR(45),
+  phone1 VARCHAR(20),
+  phone2 VARCHAR(20),
+  total int(11),
+  status VARCHAR(45),
+  registration_date date NOT NULL, 
+
+  PRIMARY KEY (`order_id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `ticketscustomers` (
   ticket_id int(11) NOT NULL AUTO_INCREMENT,
   cust_id int(11),

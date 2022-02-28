@@ -7,7 +7,7 @@
 
     $data = json_decode(file_get_contents('php://input'));
         if($data != NULL){
-            if(CartCustomer::insertCartItemCustomer($data->cust_id, $data->product_id, $data->quantity)){
+            if(CartCustomer::insertCartItemCustomer($data->cust_id, $data->product_id, $data->seller_id, $data->quantity)){
                 echo json_encode(['insertcartitem' => TRUE]);
             }
             else{
