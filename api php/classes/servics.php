@@ -53,8 +53,8 @@
 
         public static function getAllServicsOfVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
-            FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.vendor_id='".$vendor_id."'";
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name, filesservices.path
+            FROM services INNER JOIN filesservices ON filesservices.service_id = services.service_id  INNER JOIN business ON services.business_id = business.business_id WHERE services.vendor_id='".$vendor_id."'";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -69,6 +69,7 @@
                         'minprice' => $row['minprice'],
                         'maxprice' => $row['maxprice'],
                         'category' => $row['category'],
+                        'path' => $row['path'],
                         'registration_date' => $row['registration_date'],
                     ];
                 }

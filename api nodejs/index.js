@@ -51,20 +51,10 @@ app.get('/', (req, res) =>{
 
          const upload = multer({ storage: storage })
 
- 
- app.get("/upload", (req, res) => {
-    pool.query('SELECT * FROM files;', (err, rows, fields) => {
-        if (!err) {
-            res.json(rows);
-        } else {
-            console.log(err);
-        }
-    });
-});
 
 app.post('/file', upload.array('files'), (req, res, next) => {
     const files = req.files;
-    
+    console.log(files)
 
     if (!files) {
         const error = new Error('No File')
@@ -93,53 +83,6 @@ app.post('/file', upload.array('files'), (req, res, next) => {
     })
 
 });
-
-//Imagenes de servicios
-app.post('/fileservices', upload.array('files'), (req, res, next) => {
-    const files = req.files;
-    
-    if (!files) {
-        const error = new Error('No File')
-        error.httpStatusCode = 400;
-        return next(error)
-    }
-    
-        const sql = 'select service_id from services order by service_id desc limit 1;';
-     
-        pool.query(sql,(error, results) => {
-            if (error) throw error;
-            console.log(error);
-            if (results.length > 0){
-                res.json(results)
-                const data = results[0].service_id;
-                for (let clave in files) {
-                    const file = files[clave];
-                    const nombreArchivo = /*uuidv4().concat*/(file.filename);
-                    const direccion = file.path;
-                    pool.query('INSERT INTO filesservices (name,path,service_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
-                  }
-            }else{
-                res.send('No hay resultados')
-            } 
-
-    })
-
-});
-
-/*app.get('/productoimagen/:product_id',(req , res) =>{
-    const {product_id} = req.params;
-    const sql = `select * from files where product_id = ${product_id} order by product_id desc  limit 1;`
- 
-    pool.query(sql,(error, results) => {
-        if (error) throw error;
-        console.log(error);
-        if (results.length > 0){
-            res.json(results)
-        }else{
-            res.send('No hay resultados')
-        } 
-    })
-});*/
 
 app.get('/listaimagen/:product_id',(req , res) =>{
     const {product_id} = req.params;
@@ -174,10 +117,58 @@ app.get('/productoimagen/:vendor_id',(req , res) =>{
 });
 
 
-//Obtiene ultimo registro de servicio
+////////////////////////////////////////////////////////////////////////////////////////////
+
+ // Ruta para guardar imagenes
+ app.use('/uploadservices', express.static(path.join(__dirname,'uploadservices')));
+ const storageser = multer.diskStorage({
+     destination: (req, file, callBack) => {
+         callBack(null, 'uploadservices')
+     },
+     filename: (req, file, callBack) => {
+
+         callBack(null, uuidv4().concat(file.originalname))
+     }
+ });
+
+         const uploadservices = multer({ storage: storageser })
+
+app.post('/fileserv', uploadservices.array('files'), (req, res, next) => {
+    const files = req.files;
+    console.log(files)
+
+    if (!files) {
+        const error = new Error('No File')
+        error.httpStatusCode = 400;
+        return next(error)
+    }
+    
+        const sql = 'select service_id from services order by service_id desc limit 1;';
+     
+        pool.query(sql,(error, results) => {
+            if (error) throw error;
+            console.log(error);
+            if (results.length > 0){
+                res.json(results)
+                const data = results[0].service_id;
+                for (let clave in files) {
+                    const file = files[clave];
+                    const nombreArchivo = /*uuidv4().concat*/(file.filename);
+                    const direccion = file.path;
+                    pool.query('INSERT INTO filesservices (name,path,service_id) values (? , ?, ?)', [nombreArchivo,direccion,data]);
+                  }
+            }else{
+                res.send('No hay resultados')
+            } 
+
+    })
+
+});
+
+
 app.get('/servicioimagen/:vendor_id',(req , res) =>{
     const {vendor_id} = req.params;
-    const sql = `select * from services where vendor_id = ${vendor_id} order by service_id desc  limit 1;`
+    const sql = `select * from services where vendor_id = ${vendor_id} order by service_id desc limit 1;`
  
     pool.query(sql,(error, results) => {
         if (error) throw error;
@@ -191,6 +182,3 @@ app.get('/servicioimagen/:vendor_id',(req , res) =>{
 });
 
 
-
-//gabo@mail.com
-//123456789
