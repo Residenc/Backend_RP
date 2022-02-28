@@ -7,7 +7,7 @@
 
     $data = json_decode(file_get_contents('php://input')); //! trae un json con informacion que es capturada desde el html
     if($data != NULL){
-        if($res = Vendors::updateInfoBusiness($data->vendor_id, $data->name, $data->address, $data->about, $data->phone, $data->email, $data->image)){
+        if($res = Vendors::updateInfoBusiness($data->vendor_id, $data->name, $data->address, $data->about, $data->phone, $data->email)){
             echo json_encode(['updatebusiness' => TRUE]);
         }
         else{

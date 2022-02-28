@@ -177,7 +177,6 @@
                         'about' => $row['about'],
                         'phone' => $row['phone'],
                         'email' => $row['email'],
-                        'image' => $row['image']
                     ];
                 }
                 return $data;
@@ -199,8 +198,7 @@
                         'address' => $row['address'],
                         'about' => $row['about'],
                         'phone' => $row['phone'],
-                        'email' => $row['email'],
-                        'image' => $row['image']
+                        'email' => $row['email']
                     ];
                 }
                 return $data;
@@ -209,9 +207,9 @@
         }
 
 
-        public static function updateInfoBusiness($vendor_id, $name, $address, $about, $phone, $email, $image) {
+        public static function updateInfoBusiness($vendor_id, $name, $address, $about, $phone, $email) {
             $db = new Connection();
-            $query = "UPDATE business SET name='".$name."', address='".$address."', about='".$about."', phone='".$phone."', email='".$email."', image='".$image."' WHERE vendor_id='".$vendor_id."'";
+            $query = "UPDATE business SET name='".$name."', address='".$address."', about='".$about."', phone='".$phone."', email='".$email."' WHERE vendor_id='".$vendor_id."'";
             $db->query($query);
             if($db->affected_rows) {
                 return TRUE;
