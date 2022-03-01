@@ -83,8 +83,8 @@
 
         public static function getServics($service_id){
             $db = new Connection();
-            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name
-            FROM services INNER JOIN business on services.business_id = business.business_id WHERE services.service_id='".$service_id."'";
+            $query = "SELECT services.service_id, services.vendor_id, services.business_id, services.category, services.description, services.maxprice, services.minprice, services.registration_date, services.service_name, business.name,filesservices.path
+            FROM services INNER JOIN filesservices ON filesservices.service_id = services.service_id INNER JOIN business on services.business_id = business.business_id WHERE services.service_id='".$service_id."'";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) { 
@@ -100,6 +100,7 @@
                         'maxprice' => $row['maxprice'],
                         'category' => $row['category'],
                         'registration_date' => $row['registration_date'],
+                        'path' => $row['path']
                     ];
                 }
                 return $data;

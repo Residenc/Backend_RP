@@ -77,7 +77,9 @@
 
         public static function getCartItemsVendor($vendor_id){
             $db = new Connection();
-            $query = "SELECT cartitemsvendors.cartitem_id, cartitemsvendors.vendor_id, cartitemsvendors.quantity, cartitemsvendors.ordercart, cartitemsvendors.product_id, cartitemsvendors.seller_id, products.product_name, products.quantity AS stock, products.price FROM `cartitemsvendors` inner join products on cartitemsvendors.product_id = products.product_id WHERE cartitemsvendors.vendor_id = $vendor_id AND cartitemsvendors.ordercart='in cart'";
+            $query = "SELECT cartitemsvendors.cartitem_id, cartitemsvendors.vendor_id, cartitemsvendors.quantity, cartitemsvendors.ordercart, cartitemsvendors.product_id, cartitemsvendors.seller_id, products.product_name, products.quantity AS stock, products.price,filesproducts.path 
+            FROM `cartitemsvendors` inner join products on cartitemsvendors.product_id = products.product_id inner join filesproducts on filesproducts.product_id = products.product_id 
+            WHERE cartitemsvendors.vendor_id = $vendor_id AND cartitemsvendors.ordercart='in cart' group by cartitem_id;";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) {
@@ -91,7 +93,8 @@
                         'price' => $row['price'],
                         'stock' => $row['stock'],
                         'quantity' => $row['quantity'],
-                        'total' => $row['price']*$row['quantity']
+                        'total' => $row['price']*$row['quantity'],
+                        'path' => $row['path']
                     ];
                 }
                 return $data;
