@@ -187,8 +187,8 @@
 
         public static function getBusiness($vendor_id){
             $db = new Connection();
-            $query = "SELECT b.business_id,b.vendor_id,b.name,b.address,b.about,b.phone,b.email,f.path,f.filebusiness_id FROM business as b
-            INNER JOIN filesbusiness as f on f.business_id = b.business_id WHERE vendor_id=$vendor_id";
+            $query = "SELECT b.business_id,b.vendor_id,b.name,b.address,b.about,b.phone,b.email,f.path,f.filebusiness_id FROM business AS b
+            INNER JOIN filesbusiness AS f ON f.business_id = b.business_id WHERE vendor_id=$vendor_id";
             $result = $db->query($query);
             $data = [];
             if ($result->num_rows) {
